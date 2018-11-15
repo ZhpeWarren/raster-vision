@@ -9,6 +9,7 @@ from rastervision.data.label_source import (LabelSourceConfig,
 from rastervision.protos.label_source_pb2 import LabelSourceConfig as LabelSourceConfigMsg
 from rastervision.data.label_source.utils import check_uri_type
 
+
 class ChipClassificationGeoJSONSourceConfig(LabelSourceConfig):
     def __init__(self,
                  uri,

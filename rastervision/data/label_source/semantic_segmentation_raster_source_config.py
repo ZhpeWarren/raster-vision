@@ -9,6 +9,7 @@ from rastervision.protos.label_source_pb2 import LabelSourceConfig as LabelSourc
 from rastervision.data.raster_source import RasterSourceConfig
 from rastervision.data.raster_source.geotiff_source_config import GeoTiffSourceConfig
 
+
 class SemanticSegmentationRasterSourceConfig(LabelSourceConfig):
     def __init__(self, source, rgb_class_map=None):
         super().__init__(source_type=rv.SEMANTIC_SEGMENTATION_RASTER)
@@ -119,7 +120,6 @@ class SemanticSegmentationRasterSourceConfigBuilder(LabelSourceConfigBuilder):
                 ' Use "with_raster_source".')
 
         if not isinstance(source, (str, GeoTiffSourceConfig)):
-            raise rv.ConfigError('Raster source must be of type str or GeoTiffSourceConfig, got {}'.
+            raise rv.ConfigError(
+                'Raster source must be of type str or GeoTiffSourceConfig, got {}'.
                 format(type(source)))
-
-

@@ -101,16 +101,19 @@ class GeoJSONSourceConfigBuilder(RasterSourceConfigBuilder):
                 'You must specify a uri for the GeoJSONSourceConfig. Use "with_uri"'
             )
         if not isinstance(self.config.get('uri'), str):
-            raise rv.ConfigError('uri set with "with_uri" method must be a string, got {}'.
-                format(type(self.config.get('uri'))))   
+            raise rv.ConfigError(
+                'uri set with "with_uri" method must be a string, got {}'.
+                format(type(self.config.get('uri'))))
         if self.config.get('rasterizer_options') is None:
             raise rv.ConfigError(
                 'You must configure the rasterizer for the GeoJSONSourceConfig. '
                 'Use "with_rasterizer_options"')
-        if not isinstance(self.config.get('rasterizer_options'), GeoJSONSourceConfig.RasterizerOptions):
-            raise rv.ConfigError('rasterizer_options must be of type GeoJSONSourceConfig.RasterizerOptions, got'.
+        if not isinstance(
+                self.config.get('rasterizer_options'),
+                GeoJSONSourceConfig.RasterizerOptions):
+            raise rv.ConfigError(
+                'rasterizer_options must be of type GeoJSONSourceConfig.RasterizerOptions, got'.
                 format(type(self.config.get('rasterizer_options'))))
-
 
     def from_proto(self, msg):
         b = super().from_proto(msg)
