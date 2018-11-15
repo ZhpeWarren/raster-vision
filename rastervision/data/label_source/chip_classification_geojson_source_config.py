@@ -7,7 +7,7 @@ from rastervision.data.label_source import (LabelSourceConfig,
                                             LabelSourceConfigBuilder,
                                             ChipClassificationGeoJSONSource)
 from rastervision.protos.label_source_pb2 import LabelSourceConfig as LabelSourceConfigMsg
-
+from rastervision.data.label_source.utils import check_uri_type
 
 class ChipClassificationGeoJSONSourceConfig(LabelSourceConfig):
     def __init__(self,
@@ -86,6 +86,7 @@ class ChipClassificationGeoJSONSourceConfigBuilder(LabelSourceConfigBuilder):
             raise rv.ConfigError(
                 'You must set the uri for ChipClassificationGeoJSONSourceConfig'
                 ' Use "with_uri".')
+        check_uri_type(self.config.get('uri'))
 
     def from_proto(self, msg):
         b = ChipClassificationGeoJSONSourceConfigBuilder()
