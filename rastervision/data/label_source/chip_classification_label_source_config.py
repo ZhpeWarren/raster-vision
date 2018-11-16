@@ -1,11 +1,19 @@
 from copy import deepcopy
 
 import rastervision as rv
+<<<<<<< HEAD:rastervision/data/label_source/chip_classification_geojson_source_config.py
+from rastervision.data.label_source import (LabelSourceConfig,
+                                            LabelSourceConfigBuilder,
+                                            ChipClassificationGeoJSONSource)
+from rastervision.protos.label_source_pb2 import LabelSourceConfig as LabelSourceConfigMsg
+from rastervision.data.label_source.utils import check_uri_type
+=======
 from rastervision.data.label_source import (
     LabelSourceConfig, LabelSourceConfigBuilder, ChipClassificationLabelSource)
 from rastervision.data.vector_source import VectorSourceConfig
 from rastervision.protos.label_source_pb2 import (LabelSourceConfig as
                                                   LabelSourceConfigMsg)
+>>>>>>> develop:rastervision/data/label_source/chip_classification_label_source_config.py
 
 
 class ChipClassificationLabelSourceConfig(LabelSourceConfig):
@@ -84,8 +92,14 @@ class ChipClassificationLabelSourceConfigBuilder(LabelSourceConfigBuilder):
     def validate(self):
         if self.config.get('vector_source') is None:
             raise rv.ConfigError(
+<<<<<<< HEAD:rastervision/data/label_source/chip_classification_geojson_source_config.py
+                'You must set the uri for ChipClassificationGeoJSONSourceConfig'
+                ' Use "with_uri".')
+        check_uri_type(self.config.get('uri'))
+=======
                 'You must set the vector_source for ChipClassificationLabelSourceConfig'
                 ' Use "with_vector_source".')
+>>>>>>> develop:rastervision/data/label_source/chip_classification_label_source_config.py
 
     def from_proto(self, msg):
         b = ChipClassificationLabelSourceConfigBuilder()
