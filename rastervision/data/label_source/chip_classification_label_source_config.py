@@ -86,8 +86,6 @@ class ChipClassificationLabelSourceConfigBuilder(LabelSourceConfigBuilder):
             raise rv.ConfigError(
                 'You must set the vector_source for ChipClassificationLabelSourceConfig'
                 ' Use "with_vector_source".')
-        import pdb
-        pdb.set_trace()
 
     def from_proto(self, msg):
         b = ChipClassificationLabelSourceConfigBuilder()
