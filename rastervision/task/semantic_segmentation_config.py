@@ -67,7 +67,10 @@ class SemanticSegmentationConfig(TaskConfig):
             chip_size=self.chip_size,
             class_items=self.class_map.to_proto(),
             chip_options=chip_options)
-        msg.MergeFrom(TaskConfigMsg(semantic_segmentation_config=conf))
+        msg.MergeFrom(
+            TaskConfigMsg(
+                semantic_segmentation_config=conf,
+                predict_package_uri=self.predict_package_uri))
 
         return msg
 
@@ -88,12 +91,11 @@ class SemanticSegmentationConfigBuilder(TaskConfigBuilder):
 
     def from_proto(self, msg):
         conf = msg.semantic_segmentation_config
-        b = SemanticSegmentationConfigBuilder()
 
         negative_survival_probability = conf.chip_options \
                                             .negative_survival_probability
 
-        return b.with_classes(list(conf.class_items)) \
+        return self.with_classes(list(conf.class_items)) \
                 .with_predict_batch_size(msg.predict_batch_size) \
                 .with_predict_package_uri(msg.predict_package_uri) \
                 .with_debug(msg.debug) \
