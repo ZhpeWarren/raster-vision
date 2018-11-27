@@ -22,6 +22,19 @@ class TestExperimentConfig(unittest.TestCase):
 
         return task
 
+    def get_test_backend(self):
+        task = self.get_test_task()
+        backend = rv.backend.BackendConfig.builder(rv.TF_OBJECT_DETECTION) \
+                                          .with_task(task) \
+                                          .with_model_defaults(rv.SSD_MOBILENET_V2_COCO) \
+                                          .build()
+        return backend
+
+    def get_test_dataset(self):
+        dataset = rv.DatasetConfig.builder() \
+                                  .build()
+        return dataset
+
     def test_object_detection_exp(self):
         root_uri = '/some/dummy/root'
         img_path = '/dummy.tif'
@@ -144,14 +157,16 @@ class TestExperimentConfig(unittest.TestCase):
 
     def test_no_missing_config_max_with_root(self):
         task = self.get_test_task()
+        backend = self.get_test_backend()
+        dataset = self.get_test_dataset()
         # maximum args with root_uri
         try:
             rv.ExperimentConfig.builder()            \
                                .with_id('')          \
                                .with_root_uri('/dummy/root/uri')    \
                                .with_task(task)      \
-                               .with_backend('')     \
-                               .with_dataset('')     \
+                               .with_backend(backend)     \
+                               .with_dataset(dataset)     \
                                .with_evaluators([''])  \
                                .with_analyze_uri('') \
                                .with_chip_uri('')    \
@@ -164,6 +179,8 @@ class TestExperimentConfig(unittest.TestCase):
 
     def test_no_missing_config_min_with_root(self):
         task = self.get_test_task()
+        backend = self.get_test_backend()
+        dataset = self.get_test_dataset()
         # minimum args with_root_uri
         try:
             rv.ExperimentConfig.builder()            \
@@ -171,11 +188,39 @@ class TestExperimentConfig(unittest.TestCase):
                                .with_evaluators([''])  \
                                .with_root_uri('/dummy/root/uri')    \
                                .with_task(task)      \
-                               .with_backend('')     \
-                               .with_dataset('')     \
+                               .with_backend(backend)     \
+                               .with_dataset(dataset)     \
                                .build()
         except rv.ConfigError:
             self.fail('ConfigError raised unexpectedly')
+
+    def test_incorrect_backend_type(self):
+        task = self.get_test_task()
+        dataset = self.get_test_dataset()
+        # minimum args with_root_uri
+        with self.assertRaises(rv.ConfigError):
+            rv.ExperimentConfig.builder()            \
+                               .with_id('')          \
+                               .with_evaluators([''])  \
+                               .with_root_uri('/dummy/root/uri')    \
+                               .with_task(task)      \
+                               .with_backend('')     \
+                               .with_dataset(dataset)     \
+                               .build()
+
+    def test_incorrect_dataset_type(self):
+        task = self.get_test_task()
+        backend = self.get_test_backend()
+        # minimum args with_root_uri
+        with self.assertRaises(rv.ConfigError):
+            rv.ExperimentConfig.builder()            \
+                               .with_id('')          \
+                               .with_evaluators([''])  \
+                               .with_root_uri('/dummy/root/uri')    \
+                               .with_task(task)      \
+                               .with_backend(backend)     \
+                               .with_dataset('')     \
+                               .build()
 
 
 if __name__ == '__main__':
