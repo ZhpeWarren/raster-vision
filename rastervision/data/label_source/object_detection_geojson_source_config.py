@@ -7,7 +7,6 @@ from rastervision.protos.label_source_pb2 import LabelSourceConfig as LabelSourc
 from rastervision.data.label_source.utils import check_uri_type
 
 
-
 class ObjectDetectionGeoJSONSourceConfig(LabelSourceConfig):
     def __init__(self, uri):
         super().__init__(source_type=rv.OBJECT_DETECTION_GEOJSON)
