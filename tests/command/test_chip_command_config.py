@@ -6,10 +6,12 @@ from rastervision.rv_config import RVConfig
 
 class TestChipCommand(unittest.TestCase):
     def test_command_create(self):
+        task = rv.task.ChipClassificationConfig({})
+        backend = rv.backend.KerasClassificationConfig('')
         with RVConfig.get_tmp_dir() as tmp_dir:
             cmd = rv.command.ChipCommandConfig.builder() \
-                                              .with_task('') \
-                                              .with_backend('') \
+                                              .with_task(task) \
+                                              .with_backend(backend) \
                                               .with_train_scenes('') \
                                               .with_val_scenes('') \
                                               .with_root_uri(tmp_dir) \
@@ -50,12 +52,14 @@ class TestChipCommand(unittest.TestCase):
                                         .build()
 
     def test_no_config_error(self):
+        task = rv.task.ChipClassificationConfig({})
+        backend = rv.backend.KerasClassificationConfig('')
         try:
             with RVConfig.get_tmp_dir() as tmp_dir:
                 rv.command.ChipCommandConfig.builder() \
-                                            .with_task('') \
+                                            .with_task(task) \
                                             .with_root_uri(tmp_dir) \
-                                            .with_backend('') \
+                                            .with_backend(backend) \
                                             .with_train_scenes('') \
                                             .with_val_scenes('') \
                                             .build()

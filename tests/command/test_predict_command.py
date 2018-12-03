@@ -6,12 +6,14 @@ from rastervision.rv_config import RVConfig
 
 class PredictCommand(unittest.TestCase):
     def test_command_create(self):
+        task = rv.task.ChipClassificationConfig({})
+        backend = rv.backend.KerasClassificationConfig('')
         with RVConfig.get_tmp_dir() as tmp_dir:
             cmd = rv.command.PredictCommandConfig.builder() \
-                                                 .with_task('') \
+                                                 .with_task(task) \
                                                  .with_root_uri(tmp_dir) \
                                                  .with_scenes('') \
-                                                 .with_backend('') \
+                                                 .with_backend(backend) \
                                                  .build() \
                                                  .create_command()
             self.assertTrue(cmd, rv.command.PredictCommand)
@@ -38,12 +40,14 @@ class PredictCommand(unittest.TestCase):
                                            .build()
 
     def test_no_config_error(self):
+        task = rv.task.ChipClassificationConfig({})
+        backend = rv.backend.KerasClassificationConfig('')
         try:
             with RVConfig.get_tmp_dir() as tmp_dir:
                 rv.command.PredictCommandConfig.builder() \
-                                               .with_task('') \
+                                               .with_task(task) \
                                                .with_root_uri(tmp_dir) \
-                                               .with_backend('') \
+                                               .with_backend(backend) \
                                                .with_scenes(['']) \
                                                .build()
         except rv.ConfigError:
