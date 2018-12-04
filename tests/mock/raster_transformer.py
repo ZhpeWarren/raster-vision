@@ -1,4 +1,5 @@
 import unittest
+
 from unittest.mock import Mock
 
 import rastervision as rv
